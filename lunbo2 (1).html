@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
-	<style>/*590*470 */
+	<style>/* 590 470 */
 	 ul{
 	 	list-style:none;
 	 	padding:0;
@@ -14,14 +14,25 @@
 			height: 470px;
 			position: relative;
 			border:10px solid orange;
-			margin:0 auto;
-			overflow:hidden;
+			margin:20px auto;
+			/* overflow:hidden; */
 		}
 		.imgs{
 			position: absolute;
-			display: flex;
-			transition:2s ;
+			transition:2s;
 
+		}
+		.imgs li{
+			position: absolute;
+			top:0;
+			left:0;
+			opacity:0;
+			z-index: -1;
+			transition:2s;
+		}
+		.imgs .show{
+			opacity:1;
+			z-index: 0;
 		}
 		.imgs img{
 			display:block;
@@ -80,11 +91,11 @@
 <body>
 	<div id="carousel01" class="box">
 		<ul class="imgs" style="left:0;">
-			<li><a href="#"><img src="images/1.jpg" alt="1"></a></li>
+			<li class="show"><a href="#"><img src="images/1.jpg" alt="1"></a></li>
 			<li><a href="#"><img src="images/2.jpg" alt="2"></a></li>
 			<li><a href="#"><img src="images/3.jpg" alt="3"></a></li>
 			<li><a href="#"><img src="images/4.jpg" alt="4"></a></li>
-			<li><a href="#"><img src="images/5.jpg" alt="4"></a></li>
+			<li><a href="#"><img src="images/5.jpg" alt="5"></a></li>
 		</ul>
 		<div class="arrows">
 			<span class="left">&lt;</span>
@@ -99,20 +110,24 @@
 		</ul>
 	</div>
 	<script>
-		//轮播图的主要工作就是调整图片的位置，编写思路指定index值，根据index值显示对应的图片设置按钮的特殊样式
-		var box=document.getElementById('carousel01');//轮播图的显示区域
-		var imgs=box.getElementsByClassName('imgs')[0];//图片列表
-		var arrowL=box.getElementsByClassName('left')[0];//左箭头
-		var arrowR=box.getElementsByClassName('right')[0];//右箭头
-		var dots=box.getElementsByClassName('dots')[0];
-		var btns=dots.getElementsByTagName('li');
-		var imgWidth=420;
-		var index=0;
-		var t=null;
-		var s=3;
-		var n=btns.length;
+		function ibt(id){
+		// //轮播图的主要工作就是调整图片的位置，编写思路指定index值，根据index值显示对应的图片设置按钮的特殊样式
+		 var box=document.getElementById('carousel01');//轮播图的显示区域
+		 var imgsBox=box.getElementsByClassName('imgs')[0];//图片列表区域
+		 var imgs=imgsBox.getElementsByTagName('li')//图片列表
+		 var arrowL=box.getElementsByClassName('left')[0];//左箭头
+		 var arrowR=box.getElementsByClassName('right')[0];//右箭头
+		 var dots=box.getElementsByClassName('dots')[0];
+		 var btns=dots.getElementsByTagName('li');
+		 var index=0;
+		 var t=null;
+		 var s=3;
+		 var n=btns.length;
 		function showImg (index) {
-			imgs.style.left=-1*index*imgWidth+'px';
+			for(var i=0;i<n;i++){
+				imgs[i].removeAttribute('class');
+			}
+			imgs[index].className='show';
 		}
 		function showBtn (index) {
 			for(var i=0;i<btns.length;i++){
@@ -145,7 +160,8 @@
 		box.onmouseout=function () {
 			t=setInterval(arrowR.onclick, s*1000);
 		}
-		box.onmouseout();//执行一次mouseout操作，开启定时器
+		box.onmouseout();}
+		ibt('carousel01')
 	</script>
 </body>
 </html>
